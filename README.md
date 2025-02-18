@@ -15,9 +15,10 @@ This repository is divided into these sections:
 - Results and Conclusion: The biological implications of the analyses were discussed.
 
 ## Data Sources and Analyses
-The datasets used in this project were obtained from an experimental study titled [Silencing SMOC2 ameliorates kidney fibrosis by inhibiting fibroblast to myofibroblast transformation](https://insight.jci.org/articles/view/90299). The datasets are publicly available through the accession number [GSE85209]:https://www.ncbi.nlm.nih.gov/gds/?term=GSE85209.
+The datasets used in this project were obtained from an experimental study titled [Silencing SMOC2 ameliorates kidney fibrosis by inhibiting fibroblast to myofibroblast transformation](https://insight.jci.org/articles/view/90299). The datasets are publicly available under the accession number [GSE85209](https://www.ncbi.nlm.nih.gov/gds/?term=GSE85209). The sequencing data for the cell lines can be accessed through the following accession numbers: GSM2260466 GSM2260467 GSM2260468 GSM2260469 GSM2260470 GSM2260471 GSM2260472
 
 
 
 
-Exploring the **molecular mechanisms** of diseases and **identifying key genes** involved in their progression to advance our understanding and development of targeted therapies.
+
+
