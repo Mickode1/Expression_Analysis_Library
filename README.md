@@ -11,7 +11,7 @@ Therefore, this project explores and uncovers the genes significantly expressed 
 This repository is divided into these sections:
 
 - Project Staging: Details project dependencies, data loading and preparation, quality control, filtering, and normalization steps.
-- Analyses: The analyses include differential expression analysis and functional enrichment analysis.
+- Analysis: The analysis includes differential expression analysis and functional enrichment analysis.
 - Results and Conclusion: The biological implications of the analyses were discussed.
 
 ## Data Sources and Analyses
