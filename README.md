@@ -10,7 +10,7 @@ What happens when the kidney is dysfunctional?
 
 This project aims to answer this question by exploring genes significantly expressed in the presence of chronic diseases, and its overall impact on the body's processes.
 
-This repository is divided into these sections:
+This project is divided into these sections:
 
 - Project Staging: This section details project dependencies, data loading and preparation, quality control, filtering, and normalization steps.
 - Analysis: The analysis includes differential expression analysis and functional enrichment analysis.
