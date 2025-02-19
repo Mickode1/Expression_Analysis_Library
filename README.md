@@ -93,6 +93,16 @@ rownames(expression) <- expression$Gene_id
 expression <- expression %>%
   select(-"Gene_id")
 
+
+# Create metadata
+meta_data <- data.frame(
+  row.names = factor(c("normal_1", "normal_2", "normal_3", "uuo_1", "uuo_2", "uuo_3", "uuo_4")),
+  genotype = factor(c("normal", "normal", "normal", "uuo", "uuo", "uuo", "uuo")),
+  condition = factor(c("normal", "fibrosis", "normal", "fibrosis", "normal", "fibrosis", "normal")),
+  replicate = c(1, 2, 3, 1, 2, 3, 4)
+)
+
+
 #View first 6 rows of raw counts
 
 head(expression)
