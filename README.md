@@ -109,4 +109,5 @@ head(expression)
 ```
 which outputs:
 
+![Expression Count data](https://github.com/Mickode1/Expression_Analysis_Library/blob/main/Screenshot%202025-02-19%20231321.png)
 
