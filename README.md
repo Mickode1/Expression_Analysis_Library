@@ -320,6 +320,48 @@ which outputs:
 
 ![Pathway](https://github.com/Mickode1/Expression_Analysis_Library/blob/main/images/PathwayAn.png)
 
+# Results and Conclusion
+
+**Functional Enrichment Analysis**
+
+- **Biological processes**
+
+The primary biological processes identified are centered around energy production and the metabolism of molecules, ultimately leading to energy generation. These processes highlight changes in how energy is utilized within the cell. Additionally, terms related to leukocyte migration, cell-to-cell adhesion, and immune response-regulating signaling pathways indicate potential alterations in immune responses.
+
+- **Molecular function**
+
+Furthermore, the enriched molecular functions involve the movement of molecules across membranes, binding interactions between molecules, catalytic activities involving oxidation-reduction reactions, and roles in immune responses.
+
+- **Cellular compartment**
+
+The enriched cellular compartments (CC) include the mitochondrial respiratory chain complexes, which are directly involved in ATP production via oxidative phosphorylation, and the mitochondrial matrix, which hosts the Krebs cycle and fatty acid oxidation. The NADH dehydrogenase complex is a critical entry point for electrons into the respiratory chain, essential for ATP synthesis. Other key compartments are the oxidoreductase complexes, plasma membrane regions (involved in absorption/secretion and signaling/trafficking processes), peroxisomes (responsible for lipid breakdown and detoxification, e.g., β-oxidation, especially in liver/kidney cells), and the extracellular matrix (primarily maintaining structural integrity).
+
+Hence, the enriched compartments highlight the critical roles in energy production, trafficking, signaling, secretion/absorption, and lipid breakdown and detoxification.
+
+**Pathway Enrichment Analysis**
+
+The enriched pathway analysis revealed significant associations with:
+
+- **Energy dysregulation** (e.g., oxidative phosphorylation, thermogenesis)
+
+- **Metabolic and organ-specific disorders** (e.g., diabetic cardiomyopathy, non-alcoholic fatty liver disease)
+
+- **Neurodegenerative diseases** (e.g., Alzheimer's disease, Parkinson's disease, prion disease)
+
+- **Oxidative stress** (e.g., ROS-linked carcinogenesis)
+
+- **Immune/inflammatory signaling** (e.g., cytokine interactions, complement cascades)
+
+- **Structural/cellular maintenance** (e.g., ECM-receptor interaction, cytoskeleton remodeling)
+  
+# Conclusion
+
+The overall analysis revealed that the differentially expressed genes in UUO mice models are associated with metabolic disorders, neurodegenerative diseases, inflammatory signaling, and alterations in cellular integrity. Chronic kidney diseases might exacerbate or contribute to these conditions, highlighting the overall negative impacts that kidney disease has on health
+
+  
+
+
+
 
 
 
