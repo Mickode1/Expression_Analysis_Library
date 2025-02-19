@@ -134,12 +134,201 @@ log_dds_norm_wt <- assay(log_dds_norm)
 
 ```
 
-## Quality control
-
+## Quality control, Analysis and Filtering
+```r
 #Plot a heatmap 
 pheatmap(norm_cor, annotation_col= meta_data[, "genotype", drop=FALSE])
+```
 
 which outputs:
+
+![Heatmap](https://github.com/Mickode1/Expression_Analysis_Library/blob/main/images/Heatmap.jpeg)
+
+The healthy control group clustered together, while the uuo group clustered together showing a similarity in their gene expressions.
+
+```r
+
+#PCA plot
+plotPCA(log_dds_norm, intgroup = "genotype")
+
+```
+which outputs:
+
+![PCA plot](https://github.com/Mickode1/Expression_Analysis_Library/blob/main/images/PCA.jpeg)
+
+The PC1 and PC2 accounts for 95% of variance in the data, which is good for our analysis
+
+```r
+
+#Create a Deseq object
+deSeqd <- DESeq(dds)
+
+#Dispersion plot
+plotDispEsts(deSeqd)
+```
+
+which outputs:
+
+![DispersionPlt](https://github.com/Mickode1/Expression_Analysis_Library/blob/main/images/disper.png)
+
+```r
+
+norm_res <- results(deSeqd,
+                    contrast  = c("genotype", "uuo", "normal") ,
+                    alpha = 0.05, 
+                    lfcThreshold = 0.5
+)
+
+
+
+norm_res_all <- data.frame(norm_res) %>%
+  rownames_to_column(var = "ensgene") %>%
+  left_join(x = norm_res_all,
+            y = grcm38[, c("ensgene", "symbol", "description")],
+            by = "ensgene")
+  
+significant_genes <- subset(norm_res_all, padj <0.05)
+
+significant_genes <- significant_genes %>%
+  arrange(padj)
+
+# Filter DEGs based on adjusted p-value < 0.05 and log2 fold change > 0.5 or < -0.5
+degs <- norm_res_all[norm_res_all$padj < 0.05 & (norm_res_all$log2FoldChange > 0.5 | norm_res_all$log2FoldChange < -0.5), ]
+
+ FEA
+go_results_BP <- enrichGO(gene         = degs$ensgene,
+                       OrgDb        = org.Mm.eg.db,
+                       keyType      = "ENSEMBL",
+                       ont          = "BP", # Biological Process
+                       pAdjustMethod = "BH",
+                       pvalueCutoff  = 0.01,
+                       qvalueCutoff  = 0.05,
+                       readable     = TRUE)
+
+go_results_MF <- enrichGO(gene         = degs$ensgene,
+                          OrgDb        = org.Mm.eg.db,
+                          keyType      = "ENSEMBL",
+                          ont          = "MF", # Molecular Function
+                          pAdjustMethod = "BH",
+                          pvalueCutoff  = 0.01,
+                          qvalueCutoff  = 0.05,
+                          readable     = TRUE)
+
+go_results_CC <- enrichGO(gene         = degs$ensgene,
+                          OrgDb        = org.Mm.eg.db,
+                          keyType      = "ENSEMBL",
+                          ont          = "CC", # Cellular compartment
+                          pAdjustMethod = "BH",
+                          pvalueCutoff  = 0.01,
+                          qvalueCutoff  = 0.05,
+                          readable     = TRUE)
+
+top_20_MF <- go_results_MF[1:20, ]
+
+
+top_20_BP <- go_results_BP[1:20,]
+
+top_20_CC <- go_results_CC[1:20, ]
+
+
+ggplot(top_20_BP, aes(x = reorder(Description, -p.adjust), y = -log10(p.adjust))) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  coord_flip() +
+  labs(title = "Top 20 BP",
+       x = "Biological Processes",
+       y = "-log10(p.adjust)", 
+       caption  = "MikeHail, 2025") +
+  theme_minimal()
+
+```
+which outputs:
+
+![BP](https://github.com/Mickode1/Expression_Analysis_Library/blob/main/images/bp.png)
+
+```r
+
+ggplot(top_20_CC, aes(x = reorder(Description, -p.adjust), y = -log10(p.adjust))) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  coord_flip() +
+  labs(title = "Top 20 CC",
+       x = "Cellular Compartment",
+       y = "-log10(p.adjust)",
+       caption = "MikeHail, 2025") +
+  theme_minimal()
+
+```
+which outputs:
+
+![CC](https://github.com/Mickode1/Expression_Analysis_Library/blob/main/images/cc.png)
+
+```r
+
+ggplot(top_20_MF, aes(x = reorder(Description, -p.adjust), y = -log10(p.adjust))) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  coord_flip() +
+  labs(title = "Top 20 MF",
+       x = "Molecular Function",
+       y = "-log10(p.adjust)", 
+       caption = "MikeHail, 2025") +
+  theme_minimal()
+```
+which outputs:
+
+![MF](https://github.com/Mickode1/Expression_Analysis_Library/blob/main/images/Molecular%20Fun.png)
+
+```r
+
+#Pathway Analysis
+
+# Set up the biomart
+ensembl <- useMart("ensembl", dataset = "mmusculus_gene_ensembl")
+
+# Convert gene symbols to Entrez IDs
+gene_conversion <- getBM(attributes = c("ensembl_gene_id", "entrezgene_id"),
+                         filters = "ensembl_gene_id",
+                         values = significant_genes$ensgene,
+                         mart = ensembl)
+
+# Use converted Entrez IDs for KEGG analysis
+entrez_ids <- gene_conversion$entrezgene_id
+
+
+
+# Perform KEGG pathway enrichment analysis
+kegg_results <- enrichKEGG(gene = entrez_ids,
+                           organism = "mmu", # "mmu" stands for Mus musculus (mouse)
+                           keyType = "kegg",
+                           pvalueCutoff = 0.05)
+
+# kegg results into dataframe
+
+kegg_results <- data.frame(kegg_results) 
+top_20_kegg <- kegg_results[1:20,]
+  
+
+
+# Visualize pathway results
+
+ggplot(top_20_kegg, aes(x= reorder(Description, -p.adjust), y= -log10(p.adjust)))+
+  geom_bar(stat = "identity", fill= "skyblue") +
+  coord_flip() +
+  labs(x = "Description", y= "-10logpadjust",
+       caption = "MikeHail, 2025")+
+  theme_classic()
+```
+which outputs:
+
+![Pathway](https://github.com/Mickode1/Expression_Analysis_Library/blob/main/images/PathwayAn.png)
+
+
+
+
+
+
+
+
+
+
 
 
 
