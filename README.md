@@ -169,7 +169,7 @@ plotDispEsts(deSeqd)
 
 which outputs:
 
-![DispersionPlt](https://github.com/Mickode1/Expression_Analysis_Library/blob/main/images/disper.png)
+![DispersionPlt](images/disperse.png)
 
 ```r
 
