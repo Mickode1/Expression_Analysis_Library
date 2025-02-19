@@ -88,4 +88,11 @@ expression <- normal_raw %>%
 #Set rownames to Gene_id
 
 rownames(expression) <- expression$Gene_id
+
+#View first 6 rows of raw counts
+
+head(expression)
 ```
+which outputs:
+
+
