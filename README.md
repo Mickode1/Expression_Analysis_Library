@@ -50,7 +50,7 @@ library(gage)
 library(annotables)
 ```
 
-## Import and Prepare Data
+## Data import and preparation
 
 ```r
 
@@ -110,4 +110,39 @@ head(expression)
 which outputs:
 
 ![Expression Count data](https://github.com/Mickode1/Expression_Analysis_Library/blob/main/Screenshot%202025-02-19%20231321.png)
+
+```r
+#create a deseq2 dataset
+
+dds <- DESeqDataSetFromMatrix(
+  countData = expression,
+  colData = meta_data,
+  design = ~genotype
+)
+
+#Normalizing the deseq counts
+norm_dds <- estimateSizeFactors(dds)
+sizeFactors(norm_dds)
+
+dds_norm <- counts(norm_dds, normalized = TRUE)
+
+#Variance stabilization tranformation
+log_dds_norm <- vst(dds, blind = TRUE)
+
+#extract the log tranformed counts
+log_dds_norm_wt <- assay(log_dds_norm)
+
+```
+
+## Quality control
+
+#Plot a heatmap 
+pheatmap(norm_cor, annotation_col= meta_data[, "genotype", drop=FALSE])
+
+which outputs:
+
+
+
+
+
 
