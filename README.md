@@ -89,6 +89,10 @@ expression <- normal_raw %>%
 
 rownames(expression) <- expression$Gene_id
 
+#dropping the gene_id column
+expression <- expression %>%
+  select(-"Gene_id")
+
 #View first 6 rows of raw counts
 
 head(expression)
