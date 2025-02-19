@@ -173,6 +173,8 @@ which outputs:
 
 ```r
 
+#Extract results
+
 norm_res <- results(deSeqd,
                     contrast  = c("genotype", "uuo", "normal") ,
                     alpha = 0.05, 
@@ -180,13 +182,14 @@ norm_res <- results(deSeqd,
 )
 
 
-
+# Join the results to the mouse reference genome and make it a dataframe
 norm_res_all <- data.frame(norm_res) %>%
   rownames_to_column(var = "ensgene") %>%
   left_join(x = norm_res_all,
             y = grcm38[, c("ensgene", "symbol", "description")],
             by = "ensgene")
-  
+
+#Extract significantly expressed genes. My padj was set to 0.05 
 significant_genes <- subset(norm_res_all, padj <0.05)
 
 significant_genes <- significant_genes %>%
@@ -195,7 +198,9 @@ significant_genes <- significant_genes %>%
 # Filter DEGs based on adjusted p-value < 0.05 and log2 fold change > 0.5 or < -0.5
 degs <- norm_res_all[norm_res_all$padj < 0.05 & (norm_res_all$log2FoldChange > 0.5 | norm_res_all$log2FoldChange < -0.5), ]
 
- FEA
+#Functional Enrichment Analysis (FEA)
+
+#BP
 go_results_BP <- enrichGO(gene         = degs$ensgene,
                        OrgDb        = org.Mm.eg.db,
                        keyType      = "ENSEMBL",
@@ -204,7 +209,7 @@ go_results_BP <- enrichGO(gene         = degs$ensgene,
                        pvalueCutoff  = 0.01,
                        qvalueCutoff  = 0.05,
                        readable     = TRUE)
-
+#MF
 go_results_MF <- enrichGO(gene         = degs$ensgene,
                           OrgDb        = org.Mm.eg.db,
                           keyType      = "ENSEMBL",
@@ -213,7 +218,7 @@ go_results_MF <- enrichGO(gene         = degs$ensgene,
                           pvalueCutoff  = 0.01,
                           qvalueCutoff  = 0.05,
                           readable     = TRUE)
-
+#CC
 go_results_CC <- enrichGO(gene         = degs$ensgene,
                           OrgDb        = org.Mm.eg.db,
                           keyType      = "ENSEMBL",
