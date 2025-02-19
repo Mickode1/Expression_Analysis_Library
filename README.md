@@ -48,11 +48,44 @@ library(org.Mm.eg.db)
 library(pathview)
 library(gage)
 library(annotables)
+```
 
 ## Import and Prepare Data
 
+```r
 
+#Import normal raw counts data
 
+#Loading Raw counts from normal
 
+n_raw_1 <- read.delim("C://Users//ghagi//Desktop//February//GSM2260466_SMOC2_normal.txt",  header = TRUE, sep = "\t", col.names = c("Gene_id", "normal_1"), stringsAsFactors = FALSE)
+n_raw_2 <- read.delim("C://Users//ghagi//Desktop//February//GSM2260467_SMOC2_normal_3.txt", header = TRUE, sep = "\t", col.names = c("Gene_id", "normal_2"), stringsAsFactors = FALSE)
+n_raw_3 <- read.delim("C://Users//ghagi//Desktop//February//GSM2260468_SMOC2_normal_4.txt", header = TRUE, sep = "\t", col.names = c("Gene_id", "normal_3"), stringsAsFactors = FALSE)
 
+#Loading counts of uuo data
+uuo_raw <- read.delim("C://Users//ghagi//Desktop//February//GSM2260469_SMOC2_UUO.txt", header = TRUE, sep = "\t", col.names = c("Gene_id", "uuo_1"),  stringsAsFactors = FALSE)
+uuo_raw_2 <- read.delim("C://Users//ghagi//Desktop//February//GSM2260470_SMOC2_UUO_2.txt", header = TRUE, sep = "\t", col.names = c("Gene_id", "uuo_2"), stringsAsFactors = FALSE)
+uuo_raw_3 <- read.delim("C://Users//ghagi//Desktop//February//GSM2260471_SMOC2_UUO_3.txt", header = TRUE, sep = "\t", col.names = c("Gene_id", "uuo_3"),  stringsAsFactors = FALSE)
+uuo_raw_4 <- read.delim("C://Users//ghagi//Desktop//February//GSM2260472_SMOC2_UUO_4..txt", header = TRUE, sep = "\t", col.names = c("Gene_id", "uuo_4"),  stringsAsFactors = FALSE)
 
+#Joining the tables for the normal counts
+normal_raw <- n_raw_1 %>%
+  left_join(n_raw_2, by= "Gene_id") %>%
+  left_join(n_raw_3, by ="Gene_id")
+
+rownames(normal_raw) <- normal_raw$Gene_id
+
+#Join the tables for the uuo counts
+uuo_raw <- uuo_raw %>%
+  left_join(uuo_raw_2, by= "Gene_id") %>%
+  left_join(uuo_raw_3, by ="Gene_id") %>%
+  left_join(uuo_raw_4, by = "Gene_id")
+
+#Joining the normal counts to the uuo count by the Gene Id
+expression <- normal_raw %>%
+  left_join(uuo_raw, by="Gene_id")
+
+#Set rownames to Gene_id
+
+rownames(expression) <- expression$Gene_id
+```
