@@ -1,6 +1,6 @@
 # Title
 
-**Differential Gene Expression Analysis: Normal vs. UUO Mouse Models**
+**Computational Insights on Kidney Dysfunction and its Bodily Impacts**
 
 ## Background
 
@@ -363,7 +363,7 @@ The enriched pathway analysis revealed significant associations with:
   
 # Conclusion
 
-The overall analysis revealed that the differentially expressed genes in UUO mice models are associated with metabolic disorders, neurodegenerative diseases, inflammatory signaling, and alterations in cellular integrity. Chronic kidney diseases might exacerbate or contribute to these conditions, highlighting the overall negative impacts that kidney disease has on health.
+The overall analysis revealed that the differentially expressed genes in UUO mice models are associated with metabolic disorders, neurodegenerative diseases, inflammatory signaling, and alterations in cellular integrity. There is a remodeling of the kidney structure, which suggests conditions  that include fibrosis. Fibrosis is the formation of excess fibrous connective tissue, which impairs the normal kidney architecture. Chronic kidney diseases might exacerbate or contribute to these conditions, highlighting the overall negative impacts that kidney disease has on health.
 
   
 
